@@ -10,3 +10,4 @@ is to make all kinds of money...
    from the above blog post
 3. [Elegant Code jasmine-node article](http://elegantcode.com/2011/03/07/taking-baby-steps-with-node-js-bdd-style-unit-tests-with-jasmine-node-sprinkled-with-some-should/)
 4. [Some Vim joy for node, coffee script, and jasmine](http://thorstenlorenz.wordpress.com/2011/07/11/how-to-make-node-js-coffeescript-and-jasmine-play-nice-with-vim/)
+5. [Nodepad](https://github.com/alexyoung/nodepad) project as another example
