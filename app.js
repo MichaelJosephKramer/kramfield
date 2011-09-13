@@ -32,7 +32,8 @@ app.configure('production', function(){
 // Routes
 
 app.get('/', function(req, res){
-  github.getCommitApi().getBranchCommits('MichaelJosephKramer', 'Config', 'master', function(err, commits) {
+  github.authenticateToken('MichaelJosephKramer', '2ef9f58c0b8ee2332d07a8fc399b8e23')
+  github.getCommitApi().getBranchCommits('MichaelJosephKramer', 'kramfield', 'master', function(err, commits) {
     res.render('index', {
       title: 'Express'
       , commits: commits
