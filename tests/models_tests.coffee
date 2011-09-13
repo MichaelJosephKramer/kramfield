@@ -1,8 +1,18 @@
-describe 'WorkItem', ->
-  
-  describe 'When saving a new work item with valid fields', ->
+mongoose = require('mongoose')
+WorkItem = require('../models/workItem').WorkItem
 
-    it 'should check the environment', ->
-      expect(true).toBeTruthy()
-    
-    #it 'should not be nil in the daterbayse', ->
+mongoose.connect 'mongodb://localhost/kramfield_test'
+
+describe 'WorkItem', ->
+  describe 'with none of the require fields filled in', ->
+
+    it 'should fail validation', ->
+      workItem = new WorkItem()
+      error = null
+
+      workItem.save (err) ->
+        error = err
+        asyncSpecDone()
+
+      expect(error).not.toBeNull
+      asyncSepcWait()
