@@ -1,12 +1,44 @@
-(function() {
-  var api, github, sys;
-  sys = require('sys');
-  api = require('github').GitHubApi;
-  github = new api(true);
-  github.getUserApi().getFollowers('timwingfield', function(err, followers) {
-    return console.log(followers.join('\n'));
-  });
+
+/**
+ * Module dependencies.
+ */
+
+var express = require('express');
+var sys = require('sys');
+var api = require('github').GitHubApi;
+var github = new api(true);
+
+var app = module.exports = express.createServer();
+
+// Configuration
+
+app.configure(function(){
+  app.set('views', __dirname + '/views');
+  app.set('view engine', 'jade');
+  app.use(express.bodyParser());
+  app.use(express.methodOverride());
+  app.use(app.router);
+  app.use(express.static(__dirname + '/public'));
+});
+
+app.configure('development', function(){
+  app.use(express.errorHandler({ dumpExceptions: true, showStack: true })); 
+});
+
+app.configure('production', function(){
+  app.use(express.errorHandler()); 
+});
+
+// Routes
+
+app.get('/', function(req, res){
   github.getCommitApi().getBranchCommits('MichaelJosephKramer', 'Config', 'master', function(err, commits) {
-    return console.log(commits);
+    res.render('index', {
+      title: 'Express'
+      , commits: commits
+    });
   });
-}).call(this);
+});
+
+app.listen(3000);
+console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
