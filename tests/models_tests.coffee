@@ -15,4 +15,4 @@ describe 'WorkItem', ->
         asyncSpecDone()
 
       expect(error).not.toBeNull
-      asyncSepcWait()
+      asyncSpecWait()
