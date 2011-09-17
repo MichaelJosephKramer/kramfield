@@ -1,6 +1,5 @@
 mongoose = require('mongoose')
 Schema = mongoose.Schema
-ObjectId = Schema.ObjectId
 
 workItemSchema = new Schema name: { type: String, required: true }
   , number: { type: String, required: true}
@@ -9,4 +8,5 @@ workItemSchema = new Schema name: { type: String, required: true }
   , status: { type: String, required: false}
 
 mongoose.model 'WorkItem', workItemSchema
-WorkItem = mongoose.model 'WorkItem'
+module.exports = mongoose.model 'WorkItem'
+#WorkItem = mongoose.model 'WorkItem', workItemSchema

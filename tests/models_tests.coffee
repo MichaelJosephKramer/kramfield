@@ -1,18 +1,35 @@
 mongoose = require('mongoose')
-WorkItem = require('../models/workItem').WorkItem
+WorkItem = require('../models/workItem')
 
-mongoose.connect 'mongodb://localhost/kramfield_test'
+mongoose.connect 'mongodb://localhost:58467/kramfield_test'
 
-describe 'WorkItem', ->
-  describe 'with none of the require fields filled in', ->
+describe 'with none of the require fields filled in', ->
+  error = null
 
-    it 'should fail validation', ->
-      workItem = new WorkItem()
-      error = null
+  beforeEach ->
+    workItem = new WorkItem()
+    workItem.save (err) ->
+      error = err
+      asyncSpecDone()
 
-      workItem.save (err) ->
-        error = err
-        asyncSpecDone()
+    asyncSpecWait()
 
-      expect(error).not.toBeNull
-      asyncSpecWait()
+  it 'should fail validation', ->
+    expect(error).not.toBeNull
+
+describe 'with all its required fields filled in', ->
+  error = null
+
+  beforeEach ->
+    workItem = new WorkItem()
+    workItem.Name = "this better fucking work"
+    workItem.Number = "55"
+
+    workItem.save (err) ->
+      error = err
+      asyncSpecDone()
+
+    asyncSpecWait()
+
+  it 'should fail validation', ->
+    expect(error).toBeNull
