@@ -1,7 +1,3 @@
-sys = require('sys')
-api = require('github').GitHubApi
-github = new api(true)
-
 @app = require('zappa') ->
 
   configure ->
