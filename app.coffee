@@ -14,7 +14,14 @@
       render 'index', {title: 'kramfield', commits: commits}
 
   get '/workitem': ->
-    render 'workitem/index', {title: 'Manage Work Items'}
+    mongoose = require('mongoose')
+    WorkItem = require('../../../models/workItem')
+
+    mongoose.connect 'mongodb://localhost/kramfield'
+
+    WorkItem.find {}, (err, docs) ->
+      console.log docs
+      render 'workitem/index', {title: 'Manage Work Items', workitems: docs}
 
   get '/workitem/new': ->
     render 'workitem/new', {title: 'New Work Item', message: 'all is well'}
@@ -28,15 +35,12 @@
     workItem = new WorkItem
     workItem.name = request.body.name
     workItem.number = request.body.number
-    
-    @name = request.body.name
-    @message = "#{@name} saved!"
-
-    console.log "@name var: " + @name
-    console.log "workItem.name: " + workItem.name
+    workItem.description = request.body.description
+    workItem.acceptanceCriteria = request.body.acceptanceCriteria
+    workItem.status = request.body.status
 
     workItem.save (err) ->
       if err
-        @message = "Oh shit, couldn't save #{@name}"
-
-    render 'workitem/new', {title: 'New Work Item', message: "#{@message}"}
+        render 'workitem/new', {title: 'New Work Item', message: "Oh shit, couldn't save #{workItem.name}."}
+      else
+        render 'workitem/new', {title: 'New Work Item', message: "#{workItem.name} saved!"}
