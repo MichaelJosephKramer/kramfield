@@ -10,7 +10,8 @@
   get '/': ->
     api = require('github').GitHubApi
     github = new api(true)
-    github.getCommitApi().getBranchCommits 'MichaelJosephKramer', 'Config', 'master', (err, commits) ->
+    github.authenticateToken('MichaelJosephKramer', '2ef9f58c0b8ee2332d07a8fc399b8e23')
+    github.getCommitApi().getBranchCommits 'MichaelJosephKramer', 'kramfield', 'master', (err, commits) ->
       render 'index', {title: 'kramfield', commits: commits}
 
   get '/workitem': ->
