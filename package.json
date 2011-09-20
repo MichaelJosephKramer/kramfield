@@ -8,5 +8,6 @@
     , "mongodb": "0.9.6-14"
     , "mongoose": "2.1.2"
     , "jasmine-node": "1.0.9"
+    , "coffeekup"
   }
 }
