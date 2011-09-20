@@ -4,7 +4,6 @@
   , "private": true
   , "dependencies": {
       "github": "0.0.6"
-    , "zappa": "0.2.0"
     , "mongodb": "0.9.6-14"
     , "mongoose": "2.1.2"
     , "jasmine-node": "1.0.9"
