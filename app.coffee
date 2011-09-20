@@ -1,47 +1,54 @@
-@app = require('zappa') ->
+express = require('express')
+sys = require('sys')
+api = require('github').GitHubApi
+mongoose = require('mongoose')
+coffeekup = require('coffeekup')
 
-  configure ->
-    use 'bodyParser', 'methodOverride', app.router, 'static'
+github = new api true
+WorkItem = require('../../../models/workItem')
 
-  configure
-    development: -> use errorHandler: {dumpExceptions: on, showStack: on}
-    production: -> use 'errorHandler'
+mongoose.connect 'mongodb://localhost/kramfield'
 
-  get '/': ->
-    api = require('github').GitHubApi
-    github = new api(true)
-    github.authenticateToken('MichaelJosephKramer', '2ef9f58c0b8ee2332d07a8fc399b8e23')
-    github.getCommitApi().getBranchCommits 'MichaelJosephKramer', 'kramfield', 'master', (err, commits) ->
-      render 'index', {title: 'kramfield', commits: commits}
+app = module.exports = express.createServer
 
-  get '/workitem': ->
-    mongoose = require('mongoose')
-    WorkItem = require('../../../models/workItem')
+app.configure ->
+  app.set 'views', __dirname + '/views'
+  app.set 'view engine', 'coffee'
+  app.register '.coffee', coffeekup.adapters.express
+  app.use express.bodyParser
+  app.use express.methodOverride
+  app.use app.router
+  app.use(express.static(__dirname + '/public'))
 
-    mongoose.connect 'mongodb://localhost/kramfield'
+app.configure 'development', ->
+  app.use(express.errorHandler({ dumpExceptions: true, showStack: true }))
 
-    WorkItem.find {}, (err, docs) ->
-      console.log docs
-      render 'workitem/index', {title: 'Manage Work Items', workitems: docs}
+app.configure 'production', ->
+  app.use express.errorHandler
 
-  get '/workitem/new': ->
-    render 'workitem/new', {title: 'New Work Item', message: 'all is well'}
+app.get '/', (req, res) ->
+  github.authenticateToken('MichaelJosephKramer', '2ef9f58c0b8ee2332d07a8fc399b8e23')
+  github.getCommitApi().getBranchCommits 'MichaelJosephKramer', 'kramfield', 'master', (err, commits) ->
+    render 'index', {title: 'kramfield', commits: commits}
 
-  post '/workitem/new': ->
-    mongoose = require('mongoose')
-    WorkItem = require('../../../models/workItem')
+get '/workitem': ->
+  WorkItem.find {}, (err, docs) ->
+    console.log docs
+    render 'workitem/index', {title: 'Manage Work Items', workitems: docs}
 
-    mongoose.connect 'mongodb://localhost/kramfield'
+get '/workitem/new': ->
+  render 'workitem/new', {title: 'New Work Item', message: 'all is well'}
 
-    workItem = new WorkItem
-    workItem.name = request.body.name
-    workItem.number = request.body.number
-    workItem.description = request.body.description
-    workItem.acceptanceCriteria = request.body.acceptanceCriteria
-    workItem.status = request.body.status
+post '/workitem/new': ->
+  workItem = new WorkItem
+  workItem.name = request.body.name
+  workItem.number = request.body.number
+  workItem.description = request.body.description
+  workItem.acceptanceCriteria = request.body.acceptanceCriteria
+  workItem.status = request.body.status
 
-    workItem.save (err) ->
-      if err
-        render 'workitem/new', {title: 'New Work Item', message: "Oh shit, couldn't save #{workItem.name}."}
-      else
-        render 'workitem/new', {title: 'New Work Item', message: "#{workItem.name} saved!"}
+  workItem.save (err) ->
+    if err
+      render 'workitem/new', {title: 'New Work Item', message: "Oh shit, couldn't save #{workItem.name}."}
+    else
+      render 'workitem/new', {title: 'New Work Item', message: "#{workItem.name} saved!"}
