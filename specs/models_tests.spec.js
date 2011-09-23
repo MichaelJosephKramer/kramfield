@@ -1,7 +1,7 @@
 (function() {
   var WorkItem, mongoose;
   mongoose = require('mongoose');
-  WorkItem = require('../models/workItem').WorkItem;
+  WorkItem = require('../models/workItem');
   mongoose.connect('mongodb://localhost:58467/kramfield_test');
   describe('with none of the require fields filled in', function() {
     var error;
@@ -16,8 +16,7 @@
       return asyncSpecWait();
     });
     return it('should fail validation', function() {
-      console.log(error);
-      return expect(error).toBeNull;
+      return expect(error).toNotEqual(null);
     });
   });
   describe('with all its required fields filled in', function() {
@@ -35,7 +34,8 @@
       return asyncSpecWait();
     });
     return it('should fail validation', function() {
-      return expect(error).toBeNull;
+      console.log(error);
+      return expect(error).toEqual(null);
     });
   });
 }).call(this);

@@ -1,5 +1,5 @@
 mongoose = require('mongoose')
-{WorkItem} = require('../models/workItem')
+WorkItem = require('../models/workItem')
 
 mongoose.connect 'mongodb://localhost:58467/kramfield_test'
 
@@ -15,8 +15,7 @@ describe 'with none of the require fields filled in', ->
     asyncSpecWait()
 
   it 'should fail validation', ->
-    console.log error
-    expect(error).toBeNull
+    expect(error).toNotEqual null
 
 describe 'with all its required fields filled in', ->
   error = null
@@ -33,4 +32,5 @@ describe 'with all its required fields filled in', ->
     asyncSpecWait()
 
   it 'should fail validation', ->
-    expect(error).toBeNull
+    console.log error
+    expect(error).toEqual(null)

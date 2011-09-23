@@ -10,4 +10,6 @@ workItemSchema = new Schema name: { type: String, required: true }
 
 mongoose.model 'WorkItem', workItemSchema
 module.exports = mongoose.model 'WorkItem'
+#root = exports ? window
+#root.WorkItem = mongoose.model 'WorkItem'
 #WorkItem = mongoose.model 'WorkItem', workItemSchema
