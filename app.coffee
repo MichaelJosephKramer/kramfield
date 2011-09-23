@@ -56,4 +56,3 @@ app.post '/workitem/new', (req, res) ->
 
 app.listen 3000
 console.log "Express server is listening on port fucking %d in %s mode.", app.address().port, app.settings.env
-console.log "And Kramer is a fag."

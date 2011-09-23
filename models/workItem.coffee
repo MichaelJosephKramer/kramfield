@@ -1,3 +1,4 @@
+console.log 'included'
 mongoose = require('mongoose')
 Schema = mongoose.Schema
 
