@@ -1,3 +1,9 @@
+## Weekend work 9.23
+
+1. Kramer - vows spike
+2. Tim - Expresso
+3. Success from either, look at backbone
+
 ## Kramfield Project Once
 
 Main goal of Kramfield Project One is to be a non-invasive work item tracker. Meaning,
