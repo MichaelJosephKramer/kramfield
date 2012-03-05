@@ -1,10 +1,10 @@
 (function() {
-  var WorkItem, api, app, coffeekup, express, github, mongoose, sys;
+  var WorkItem, api, app, coffeecup, express, github, mongoose, sys;
   express = require('express');
   sys = require('sys');
   api = require('github').GitHubApi;
   mongoose = require('mongoose');
-  coffeekup = require('coffeekup');
+  coffeecup = require('coffeecup');
   github = new api(true);
   WorkItem = require('./models/workItem');
   mongoose.connect('mongodb://localhost/kramfield');
@@ -12,7 +12,7 @@
   app.configure(function() {
     app.set('views', __dirname + '/views');
     app.set('view engine', 'coffee');
-    app.register('.coffee', coffeekup.adapters.express);
+    app.register('.coffee', coffeecup.adapters.express);
     app.use(express.bodyParser());
     app.use(express.methodOverride());
     app.use(app.router);
