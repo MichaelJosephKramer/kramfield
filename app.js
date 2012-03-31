@@ -7,7 +7,8 @@
   coffeecup = require('coffeecup');
   github = new api(true);
   WorkItem = require('./models/workItem');
-  mongoose.connect('mongodb://localhost/kramfield');
+  //mongoose.connect('mongodb://localhost/kramfield');
+  mongoose.connect('mongodb://kramfield:TimSux#1@staff.mongohq.com:10001/app3592265')
   app = module.exports = express.createServer();
   app.configure(function() {
     app.set('views', __dirname + '/views');
