@@ -73,6 +73,7 @@
       }
     });
   });
-  app.listen(3000);
+  var port = process.env.PORT || 3000;
+  app.listen(port);
   console.log("Express server is listening on port fucking %d in %s mode.", app.address().port, app.settings.env);
 }).call(this);
