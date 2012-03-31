@@ -6,8 +6,8 @@
   mongoose = require('mongoose');
   coffeecup = require('coffeecup');
   github = new api(true);
-  mongoose.connect('mongodb://kramfield:TimSux#1@ds031747.mongolab.com:31747/heroku_app3592265');
   WorkItem = require('./models/workItem');
+  mongoose.connect('mongodb://kramfield:TimSux@ds031747.mongolab.com:31747/heroku_app3592265');
   //mongoose.connect('mongodb://localhost/kramfield');
   //mongoose.connect('mongodb://kramfield:TimSux#1@staff.mongohq.com:10001/app3592265')
   app = module.exports = express.createServer();
