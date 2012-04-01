@@ -11,6 +11,6 @@ task 'deploy', 'deploy to heroku', ->
     console.log "*****************************************************"
     console.log stdout
     if stderr
-      console.log "The deets:"
+      console.log "The Deets:"
       console.log "*****************************************************"
       console.log stderr
